@@ -20,7 +20,7 @@ from flask_apscheduler import APScheduler
 from flask_sqlalchemy import SQLAlchemy
 
 import tensorflow
-from tensorflow.keras.models import load_model, Sequential
+from keras.models import load_model, Sequential
 from sklearn.preprocessing import LabelEncoder
 
 
@@ -57,7 +57,7 @@ def getWeekday(num):
 
 # Query WeatherBit API and return list of weather forecasts
 # Scheduled to run automatically every day at 3am
-@scheduler.task('cron', id='do_job_2', hour='3')
+@scheduler.task('cron', id='getWeather', hour='3')
 def getWeather():
     weatherURL = f"https://api.weatherbit.io/v2.0/forecast/daily?city=Washington,DC&units=I&key={W_KEY}"
     data = requests.get(weatherURL).json()
@@ -65,7 +65,7 @@ def getWeather():
     day = getToday()
 
     forecast.clear()
-    forecast.append(datetime.today())
+    forecast.append(datetime.today())   # <--- USED FOR DEBUGGING
     for i, d in enumerate(data['data']):
         entry = {'date': {
                     'text': d['valid_date'],
@@ -81,7 +81,7 @@ def getWeather():
                     'lunar': round(d['moon_phase'], 4)
                 }
             }
-    forecast.append(entry)
+        forecast.append(entry)
 
 # Creates Numpy Array of data from weather forecast for crime prediction
 def generateSamples(n=16):
