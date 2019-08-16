@@ -1,0 +1,24 @@
+.mainflag {
+    width: 80px;
+    height: 120px;
+    position: relative;
+    left: 30px;
+    -webkit-transform:rotate(25deg);
+    -moz-transform: rotate(25deg);
+    -ms-transform: rotate(25deg);
+    -o-transform: rotate(25deg);
+    transform: rotate(25deg);
+  }
+
+.smallflag {
+    width: 40px;
+    height: 60px;
+    position: relative;
+    left: 15px;
+    display: inline-block;
+    -webkit-transform:rotate(25deg);
+    -moz-transform: rotate(25deg);
+    -ms-transform: rotate(25deg);
+    -o-transform: rotate(25deg);
+    transform: rotate(25deg);
+  }

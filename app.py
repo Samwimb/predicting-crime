@@ -137,13 +137,19 @@ getWeather()
 
 @app.route("/")
 def index():
-    """Return the homepage."""
+    """Return the homepage"""
     return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
 
 @app.route("/get_forecast")
 def getForecast():
     """Diagnostic Route"""
     return jsonify(forecast)
+
+@app.route("/forecast")
+def crimeForecast():
+    """Return array with today's crime prediction and 5-day forecast"""
+    return jsonify(list(labels.inverse_transform([3, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
+    # return jsonify(predict(dc_crime_model, generateSamples(6)))
 
 
 #################################################
