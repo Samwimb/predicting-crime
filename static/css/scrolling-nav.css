@@ -1,0 +1,18 @@
+/*!
+ * Start Bootstrap - Scrolling Nav (https://startbootstrap.com/template-overviews/scrolling-nav)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
+ */
+header {
+  /* padding: 156px 0 100px; */
+  padding: 280px 0 180px;
+  background-image: url("../images/Capitol-Hill.png"); 
+  /* background-color: black; */
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+section {
+  padding: 150px 0;
+}
+
