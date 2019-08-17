@@ -11,7 +11,7 @@ summaryBody.html("");
 
 d3.json('/forecast', function(predictions){
     d3.json('/get_forecast', function(data){
-        summaryTitle.append("h1").text(`Crime Prediction for:`)
+        summaryTitle.append("h2").text(`Crime Prediction`)
         summaryTitle.append("h4").text(`${new Date()}`)
         summaryTitle.append("img")
             .attr('src', `static/images/flag_${predictions[0]}.png`)
