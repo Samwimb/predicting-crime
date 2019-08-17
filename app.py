@@ -138,6 +138,7 @@ getWeather()
 @app.route("/")
 def index():
     """Return the homepage"""
+    # return render_template("justins_playground.html")
     return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
 
 @app.route("/get_forecast")
