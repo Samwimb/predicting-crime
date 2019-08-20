@@ -2,6 +2,7 @@ d3.json('/get_forecast', function(data){
     console.log(data);
 });
 
+var weekDay = ['', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 var summaryTitle = d3.select('#summary-title');
 summaryTitle.html("");
@@ -11,19 +12,19 @@ summaryBody.html("");
 
 d3.json('/forecast', function(predictions){
     d3.json('/get_forecast', function(data){
-        summaryTitle.append("h2").text(`Crime Prediction`)
-        summaryTitle.append("h4").text(`${new Date()}`)
+        summaryTitle.html("<u><strong>Crime Prediction</strong></u>")
+        summaryTitle.append("h5").text(`${data[0]}`)
         summaryTitle.append("img")
             .attr('src', `static/images/flag_${predictions[0]}.png`)
             .attr('class', 'mainflag')
+            .attr('style', 'padding-top:10px; display:block; margin-left:30%')
         predictions.forEach((p, i) => {
-            if (i == 0) { return; }
-            summaryBody.append("p").text(`${data[i].date.text}:`)
-                .attr('style', 'display:inline-block')
-            summaryBody.append("img")
+            if (i == 0 | i == 1) { return; }
+            summaryBody.append("tr")
+            summaryBody.append("td").text(`${weekDay[data[i].date.day]}:`)
+            summaryBody.append("td").append("img")
                 .attr('src', `static/images/flag_${predictions[i]}.png`)
                 .attr('class', 'smallflag')
-            summaryBody.append("br")
         })
     })
 });

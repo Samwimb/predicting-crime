@@ -38,3 +38,14 @@ body {
     /* padding-top: 60px;  */
     padding-bottom: 40px; 
 }
+
+.panel {
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+table, tr, td {
+  border: 1px solid black;
+}

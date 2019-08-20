@@ -6,7 +6,7 @@ import os
 
 import numpy as np
 
-from datetime import datetime
+from datetime import date
 
 import requests
 
@@ -46,7 +46,7 @@ forecast = []
 
 # Get Day of the Week for today - Sunday=1
 def getToday():
-    d = datetime.today().isoweekday() + 1
+    d = date.today().isoweekday() + 1
     if d == 8:
         d = 1
     return d
@@ -65,7 +65,7 @@ def getWeather():
     day = getToday()
 
     forecast.clear()
-    forecast.append(datetime.today())   # <--- USED FOR DEBUGGING
+    forecast.append(date.today().strftime("%A, %d %B, %Y"))   # <--- USED FOR DEBUGGING
     for i, d in enumerate(data['data']):
         entry = {'date': {
                     'text': d['valid_date'],
@@ -138,8 +138,8 @@ getWeather()
 @app.route("/")
 def index():
     """Return the homepage"""
-    # return render_template("justins_playground.html")
-    return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
+    return render_template("justins_playground.html")
+    # return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
 
 @app.route("/get_forecast")
 def getForecast():
