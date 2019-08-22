@@ -1,23 +1,27 @@
-
+// Array for printing day of week
 var weekDay = ['', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+// Save selections for later use
 var summaryTitle = d3.select('#summary-title');
 var summaryBody = d3.select('#summary-body');
 
+// Initialize leaflet map
 var myMap = L.map("map", {
     center: [38.9072, -77.0369],
     zoom: 11,
-    // layers: [districts]
 });
 
+// Main program
+// Get weather data (only used to print current date)   <-- this could be cleaned up (new Date())
 d3.json('/get_weather', data => {
+    // Get crime prediction from ML models
     d3.json('/crime_forecast', predicts => {
-        weather = data[0];
+        // predicts = [{label: #, predictions: [...]}, ...]
 
+        pDate = data[0];
         var geojson;
 
-        console.log(data);
-
+        // Helper function to return color for styling
         function getColor (val) {
             switch (val) {
                     case 'VeryLow': return '#f2f2f2';
@@ -28,10 +32,12 @@ d3.json('/get_weather', data => {
             }
         }
 
+        // Helper function to return style object for map layers
         function style(feature) {
             var r;
             predicts.forEach(d => { if (d.label == feature.properties.DISTRICT) { r = d }});
 
+            // Style the entire DC outline differently
             if (feature.properties.DISTRICT == 0) {
                 return {
                     color: getColor(r.predictions[0]),
@@ -46,32 +52,38 @@ d3.json('/get_weather', data => {
             };
         }
 
+        // Mouseover event code
         function highlightFeature(e) {
             var layer = e.target;
 
+            // Re-build prediction panel with highlighted district's info
             buildPanel(layer.feature);
 
+            // Restyle highlighted district to accentuate selection
             layer.setStyle({
                 weight: 5,
                 color: layer.options.fillColor
             });
 
+            // Avoid known issues with dumb browsers
             if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
                 layer.bringToFront();
             }
         }
 
+        // Mouseout event code
+        // Restyle to defaults
         function resetHighlight(e) {
             geojson.resetStyle(e.target);
         }
 
+        // Zoom on click
         function zoomToFeature(e) {
             myMap.fitBounds(e.target.getBounds());
         }
 
+        // Bind event listeners on each feature
         function onEachFeature(feature, layer) {
-            // layer.bindPopup("<h3>" + feature.properties.NAME + "</h3>");       // <--- update with crime prediction info?
-
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
@@ -79,21 +91,27 @@ d3.json('/get_weather', data => {
             });
         }
 
+        // Construct prediction panel using the passed feature as an index
         function buildPanel(feature) {
+            // Ensure old data is cleared out
             summaryTitle.html("");
             summaryBody.html("");
 
+            // Add title, highlighted district, and date
             summaryTitle.html("<u><strong>Crime Prediction</strong></u>")
             summaryTitle.append("h5").text(`${feature.properties.NAME}`)
-            summaryTitle.append("h5").text(`${weather}`)
+            summaryTitle.append("h5").text(`${pDate}`)
 
+            // Store prediction data for selected feature
             var r;
             predicts.forEach(d => { if (d.label == feature.properties.DISTRICT) { r = d }});
 
+            // Add large flag for today's prediction
             summaryTitle.append("img")
                 .attr('src', `static/images/flag_${r.predictions[0]}.png`)
                 .attr('class', 'mainflag')
 
+            // Add day of the week and small flag for the rest of the days in the prediction (default=5)
             r.predictions.forEach( (d, i) => {
                 if ( i == 0 ) { return; }
                 summaryBody.append("tr")
@@ -105,13 +123,16 @@ d3.json('/get_weather', data => {
             })
         }
 
+        // Initialize map and fit zoom to DC proper
         geojson = L.geoJSON(boundaries, {style: style, onEachFeature: onEachFeature}).addTo(myMap);
         myMap.fitBounds(geojson.getBounds());
 
+        // Initialize prediction panel with DC overall data
         buildPanel(boundaries.features[0]);
     })
 })
 
+// Add Mapbox 'Streets' tileset to map
 L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
