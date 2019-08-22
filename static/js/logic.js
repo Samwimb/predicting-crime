@@ -7,7 +7,6 @@ var summaryBody = d3.select('#summary-body');
 var myMap = L.map("map", {
     center: [38.9072, -77.0369],
     zoom: 11,
-    // layers: [districts]
 });
 
 d3.json('/get_weather', data => {
