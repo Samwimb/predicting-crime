@@ -23,7 +23,7 @@ import tensorflow as tf
 import keras
 from keras.utils import CustomObjectScope
 from keras.initializers import glorot_uniform
-from keras.models import load_model, Sequential
+from keras.models import load_model, Sequential, model_from_json
 from keras.layers import Dense, Dropout
 from sklearn.preprocessing import LabelEncoder
 
@@ -91,12 +91,16 @@ def getWeather():
 def generateSamples(n=16):
     if n > 16:
         n = 16
-    samples = np.array([[]])
-    for i in range(n):
+    d = forecast[1]
+    samples = np.array([[d['wind'], d['snow'], d['snow_depth'], d['max_temp'], d['min_temp'],
+                       d['day'], d['date'], d['month'], d['year'], d['lunar']]])
+    for i in range(2, n+1):
         d = forecast[i]
         s = np.array([[d['wind'], d['snow'], d['snow_depth'], d['max_temp'], d['min_temp'],
                        d['day'], d['date'], d['month'], d['year'], d['lunar']]])
         samples = np.append(samples, s, axis=0)
+    print(np.transpose(samples).shape)
+    # print(samples)
     return samples
 
 # Returns text labels for test sample predictions
@@ -109,10 +113,14 @@ def predict(models, samples):
                  }
         for s in samples:
             region['days'].append(getWeekday(s[5]))                                                # <-- check index for day of week
+            print(region)
+            print(s)
+            print(s.shape)
             with graph.as_default():
                 x = labels.inverse_transform(m['model'].predict_classes(s))
             region['predictions'].append(x)
         prediction_list.append(region)
+    print(prediction_list)
     return prediction_list
 
 
@@ -142,14 +150,37 @@ graph = tf.get_default_graph()
 
 # Load models for each region
 with CustomObjectScope({'GlorotUniform': glorot_uniform()}):
-        DCmodel = load_model('./static/models/alldistricts.h5')
-        D1model = load_model('./static/models/district1.h5')
-        D2model = load_model('./static/models/district2.h5')
-        D3model = load_model('./static/models/district3.h5')
-        D4model = load_model('./static/models/district4.h5')
-        D5model = load_model('./static/models/district5.h5')
-        D6model = load_model('./static/models/district6.h5')
-        D7model = load_model('./static/models/district7.h5')
+    with open('./static/models/model_architecture_alldistricts.json', 'r') as f:
+        DCmodel = model_from_json(f.read())
+    DCmodel.load_weights('./static/models/alldistricts_weights.h5')
+
+    with open('./static/models/model_architecture_district1.json', 'r') as f:
+        D1model = model_from_json(f.read())
+    D1model.load_weights('./static/models/district1_weights.h5')
+
+    with open('./static/models/model_architecture_district2.json', 'r') as f:
+        D2model = model_from_json(f.read())
+    D2model.load_weights('./static/models/district2_weights.h5')
+
+    with open('./static/models/model_architecture_district3.json', 'r') as f:
+        D3model = model_from_json(f.read())
+    D3model.load_weights('./static/models/district3_weights.h5')
+
+    with open('./static/models/model_architecture_district4.json', 'r') as f:
+        D4model = model_from_json(f.read())
+    D4model.load_weights('./static/models/district4_weights.h5')
+
+    with open('./static/models/model_architecture_district5.json', 'r') as f:
+        D5model = model_from_json(f.read())
+    D5model.load_weights('./static/models/district5_weights.h5')
+
+    with open('./static/models/model_architecture_district6.json', 'r') as f:
+        D6model = model_from_json(f.read())
+    D6model.load_weights('./static/models/district6_weights.h5')
+
+    with open('./static/models/model_architecture_district7.json', 'r') as f:
+        D7model = model_from_json(f.read())
+    D7model.load_weights('./static/models/district7_weights.h5')
 
 # Store models with label
 Models = [

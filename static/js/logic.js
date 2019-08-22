@@ -9,15 +9,20 @@ summaryBody.html("");
 
 var predictions = [];
 d3.json('/crime_forecast', data => {
+    console.log(data);
     data.forEach(p => {
+        console.log(p);
         predictions.append(p);
     });
 });
+console.log(predictions);
 
 var weather;
 d3.json('/get_weather', data => {
+    console.log(data);
     weather = data[0];
 });
+console.log(weather);
 
 var myMap = L.map("map", {
     center: [38.9072, -77.0369],
