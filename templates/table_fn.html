@@ -86,8 +86,41 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>About the data</h2>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+          <h2>Data Table: Predictions</h2>
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for date">
+          <table id="myTable">
+            <tr class="header">
+                <th style="width:25%;">Date</th>
+                <th style="width:25%;">Prediction</th>
+                <th style="width:25%;">Actual Count</th>
+                <th style="width:25%;">Correct Prediction</th>
+            </tr>
+            <tr>
+                <td>8/15/2019</td>
+                <td>Medium High</td>
+                <td>40</td>
+                <td>False</td>
+            </tr>
+            <tr>
+                <td>8/16/2019</td>
+                <td>Medium High</td>
+                <td>100</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>8/17/2019</td>
+                <td>Medium Low</td>
+                <td>123</td>
+                <td>False</td>
+            </tr>
+            <tr>                
+                <td>8/18/2019</td>
+                <td>High</td>
+                <td>150</td>
+                <td>True</td>
+            </tr>
+        </table>
+          <!-- <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p> -->
         </div>
       </div>
     </div>
@@ -97,58 +130,57 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-        <h2>Contact us</h2>
-        <p class="lead">We would love to hear from you!</p>
+          <h2>Contact us</h2>
+          <p class="lead">We love to hear from you</p>
           <div class="row">
             <div class="col-sm-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Rebeca Hasan</h5>
-                  <p class="card-text">Learn about me.</p>
-                  <a href="https://www.linkedin.com/in/rebeca-hassan-5a79656/" class="btn btn-primary">LinkedIn</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Fiona Nguyen</h5>
-                  <p class="card-text">Learn about me.</p>
-                  <a href="https://www.linkedin.com/in/fionanguyen/" class="btn btn-primary">LinkedIn</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Veronique Singh</h5>
-                  <p class="card-text">Learn about me.</p>
-                  <a href="https://www.linkedin.com/in/phamnique/" class="btn btn-primary">LinkedIn</a>
-                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Rebeca Hasan</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
                 </div>
             </div>
+                <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Fiona Nguyen</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Veronique Singh</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                        </div>
           </div>
-          <br>
           <div class="row">
-            <div class="col-sm-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Justin Stubbs</h5>
-                  <p class="card-text">Learn about me.</p>
-                  <a href="#" class="btn btn-primary">LinkedIn</a>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Justin Stubbs</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                    </div>
                 </div>
+                    <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sam Wimberly</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                    </div>
               </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Sam Wimberly</h5>
-                  <p class="card-text">Learn about me.</p>
-                  <a href="https://www.linkedin.com/in/samwimberly/" class="btn btn-primary">LinkedIn</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -169,6 +201,8 @@
   <script src="..//static/js/jquery.easing.min.js"></script>
   <!-- Custom JavaScript for this theme -->
   <script src="..//static/js/scrolling-nav.js"></script>
+  <!-- My Javascript -->
+  <script src="../static/js/table.js"></script>
 
 </body>
 
