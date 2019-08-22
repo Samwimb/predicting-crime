@@ -10,12 +10,18 @@
 
   <title>DC Crime Predicted</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="..//static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 
   <!-- Custom styles for this template -->
-  <link href="..//static/css/scrolling-nav.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/scrolling-nav.css') }}"> -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/scrolling-nav.css') }}">
+
+  <!-- My CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/format.css') }}">
 
 </head>
 
@@ -71,15 +77,34 @@
   </section>
 
   <section id="visualization" class="bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <h2>Visualizations</h2>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Visualizations</h2>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 mx-auto" id="map-container">
+              <div id="map"></div>
+            </div>
+            <div class="col-md-4 mx-auto">
+              <!-- <div class="well">
+                <h5>SELECT Sample:</h5>
+                <select id="selDataset" onchange="optionChanged(this.value)"></select>
+              </div> -->
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 id="summary-title" class="panel-title"></h3>
+                </div>
+                <div class="panel-body">
+                  <table id="summary-body" style='width:100%'>
+                  </table>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <section id="aboutdata">
     <div class="container">
@@ -163,12 +188,24 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="..//static/js/jquery.min.js"></script>
-  <script src="..//static/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+
   <!-- Plugin JavaScript -->
-  <script src="..//static/js/jquery.easing.min.js"></script>
-  <!-- Custom JavaScript for this theme -->
-  <script src="..//static/js/scrolling-nav.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/scrolling-nav.js') }}"></script>
+
+
+  <!-- Leaflet JavaScript -->
+  <script type="text/javascript" src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+  
+  <!-- D3 JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+
+  <!-- My JavaScript -->
+  <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/election_districts.js') }}"></script> -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/boundaries.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/logic.js') }}"></script>
 
 </body>
 
