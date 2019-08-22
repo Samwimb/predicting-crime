@@ -48,6 +48,76 @@ W_KEY = os.environ.get('w_key', "aa2739ba803749f08d1691ee4f04d27a")       # <---
 # Intialize empty list for weather forecast
 forecast = []
 
+bins [ {
+    verylow: 62,
+    low: 83,
+    medium: 104,
+    high: 125,
+    veryhigh: 163
+},
+{
+    verylow: 5,
+    low: 10,
+    medium: 15,
+    high: 20,
+    veryhigh: 36
+},
+{
+    verylow: 7,
+    low: 13,
+    medium: 19,
+    high: 25,
+    veryhigh: 45
+},
+{
+    verylow: 7,
+    low: 13,
+    medium: 19,
+    high: 25,
+    veryhigh: 42
+},
+{
+    verylow: 4,
+    low: 9,
+    medium: 14,
+    high: 19,
+    veryhigh: 33
+},
+{
+    verylow: 4,
+    low: 9,
+    medium: 14,
+    high: 19,
+    veryhigh: 31
+},
+{
+    verylow: 4,
+    low: 9,
+    medium: 14,
+    high: 19,
+    veryhigh: 29
+},
+{
+    verylow: 3,
+    low: 7,
+    medium: 11,
+    high: 15,
+    veryhigh: 25
+}]
+
+def insertRow(x):
+    date = forecast[1]['text']
+    for i, d in enumerate(districts):
+        # check to to see ifn row for date exists
+        # if it does, overwrite it (update)
+        # if it doesnt', insert data
+
+def updateRow():
+    # call api
+    # count records for last day that doesn't have entry for actual_count
+    # compare to prediction and assign value
+
+    
 
 
 # Get Day of the Week for today - Sunday=1
@@ -138,14 +208,9 @@ Base = automap_base()
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
 
-district1 = Base.classes.district1
-district2 = Base.classes.district2
-district3 = Base.classes.district3
-district4 = Base.classes.district4
-district5 = Base.classes.district5
-district6 = Base.classes.district6
-district7 = Base.classes.district7
-alldistricts = Base.classes.alldistricts
+districts=[Base.classes.alldistricts, Base.classes.district1, Base.classes.district2, Base.classes.district3, Base.classes.district4, Base.classes.district5,
+Base.classes.district6,
+Base.classes.district7]
 
 # Save references to each table
 # Samples_Metadata = Base.classes.sample_metadata
@@ -223,8 +288,8 @@ Samples = generateSamples(6)
 @app.route("/")
 def index():
     """Return the homepage"""
-    # return render_template("justins_playground.html")
-    return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
+    return render_template("justins_playground.html")
+    # return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
 
 @app.route("/get_weather")
 def getForecast():
@@ -235,7 +300,9 @@ def getForecast():
 def crimeForecast():
     """Return array with today's crime prediction and 5-day forecast"""
     # return jsonify(list(labels.inverse_transform([0, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
-    return jsonify(predict(Models, Samples))
+    x = predict(Models, Samples)
+    insertRow(x)
+    return jsonify(x)
 
 
 #################################################
