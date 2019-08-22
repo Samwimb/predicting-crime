@@ -48,6 +48,8 @@ W_KEY = os.environ.get('w_key', "aa2739ba803749f08d1691ee4f04d27a")       # <---
 # Intialize empty list for weather forecast
 forecast = []
 
+
+
 # Get Day of the Week for today - Sunday=1
 def getToday():
     d = date.today().isoweekday() + 1
@@ -99,8 +101,8 @@ def generateSamples(n=16):
         s = np.array([[d['wind'], d['snow'], d['snow_depth'], d['max_temp'], d['min_temp'],
                        d['day'], d['date'], d['month'], d['year'], d['lunar']]])
         samples = np.append(samples, s, axis=0)
-    print(samples.shape)
-    print(samples)
+    print(np.transpose(samples).shape)
+    # print(samples)
     return samples
 
 # Returns text labels for test sample predictions
@@ -108,16 +110,17 @@ def predict(models, samples):
     prediction_list = []
     for m in models:
         region = {'label': m['label'],
-                  'predictions': np.array([]),
+                  'predictions': [],
                   'days': []
                  }
         for s in samples:
             region['days'].append(getWeekday(s[5]))                                                # <-- check index for day of week
+            print(region)
+            print(s)
+            print(s.shape)
             with graph.as_default():
-                region['predictions'] = np.append(region['predictions'],
-                    labels.inverse_transform(m['model'].predict_classes(np.reshape(s, (-1, 10)))))
-                # region['predictions'].append(labels.inverse_transform(m['model'].predict_classes(np.reshape(s, (-1, 10)))).astype(str))
-            region['predictions'] = region['predictions'].tolist()
+                x = labels.inverse_transform(m['model'].predict_classes(s))
+            region['predictions'].append(x)
         prediction_list.append(region)
     print(prediction_list)
     return prediction_list
@@ -127,13 +130,22 @@ def predict(models, samples):
 # Configure Database
 #################################################
 
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-# db = SQLAlchemy(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/database.sqlite"
+db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
-# Base = automap_base()
+Base = automap_base()
 # reflect the tables
-# Base.prepare(db.engine, reflect=True)
+Base.prepare(db.engine, reflect=True)
+
+district1 = Base.classes.district1
+district2 = Base.classes.district2
+district3 = Base.classes.district3
+district4 = Base.classes.district4
+district5 = Base.classes.district5
+district6 = Base.classes.district6
+district7 = Base.classes.district7
+alldistricts = Base.classes.alldistricts
 
 # Save references to each table
 # Samples_Metadata = Base.classes.sample_metadata
