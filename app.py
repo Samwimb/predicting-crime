@@ -48,7 +48,6 @@ W_KEY = os.environ.get('w_key', "aa2739ba803749f08d1691ee4f04d27a")       # <---
 # Intialize empty list for weather forecast
 forecast = []
 
-<<<<<<< HEAD
 bins [ {
     verylow: 62,
     low: 83,
@@ -121,8 +120,6 @@ def updateRow():
     
 
 
-=======
->>>>>>> 9bb08e089e02d850f6be01c39db260a864b6ded6
 # Get Day of the Week for today - Sunday=1
 def getToday():
     d = date.today().isoweekday() + 1
@@ -204,15 +201,11 @@ def predict(models, samples):
 # reflect an existing database into a new model
 # Base = automap_base()
 # reflect the tables
-<<<<<<< HEAD
 Base.prepare(db.engine, reflect=True)
 
 districts=[Base.classes.alldistricts, Base.classes.district1, Base.classes.district2, Base.classes.district3, Base.classes.district4, Base.classes.district5,
 Base.classes.district6,
 Base.classes.district7]
-=======
-# Base.prepare(db.engine, reflect=True)
->>>>>>> 9bb08e089e02d850f6be01c39db260a864b6ded6
 
 # Save references to each table
 # Samples_Metadata = Base.classes.sample_metadata
