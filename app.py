@@ -149,7 +149,7 @@ def getForecast():
 @app.route("/forecast")
 def crimeForecast():
     """Return array with today's crime prediction and 5-day forecast"""
-    return jsonify(list(labels.inverse_transform([3, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
+    return jsonify(list(labels.inverse_transform([0, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
     # return jsonify(predict(dc_crime_model, generateSamples(6)))
 
 
