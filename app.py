@@ -195,17 +195,70 @@ def predict(models, samples):
 # Configure Database
 #################################################
 
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-# db = SQLAlchemy(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/database.sqlite"
+db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
-# Base = automap_base()
-# reflect the tables
-Base.prepare(db.engine, reflect=True)
+Base = declarative_base()
 
-districts=[Base.classes.alldistricts, Base.classes.district1, Base.classes.district2, Base.classes.district3, Base.classes.district4, Base.classes.district5,
-Base.classes.district6,
-Base.classes.district7]
+class allDistricts(Base):
+    __tablename__ = 'alldistricts'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+    
+class District1(Base):
+    __tablename__ = 'district1'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+class District2(Base):
+    __tablename__ = 'district2'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+class District3(Base):
+    __tablename__ = 'district3'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+class District4(Base):
+    __tablename__ = 'district4'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+class District5(Base):
+    __tablename__ = 'district5'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+class District6(Base):
+    __tablename__ = 'district6'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+class District7(Base):
+    __tablename__ = 'district7'
+    Date = Column(String(30))
+    Prediction = Column(String(30))
+    Actual = Column(String(30))
+    Correct = Column(String(30))
+
+districts=[allDistricts, District1, District2, District3,
+ District4, District5, District6, District7]
 
 # Save references to each table
 # Samples_Metadata = Base.classes.sample_metadata
