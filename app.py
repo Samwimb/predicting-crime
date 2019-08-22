@@ -99,8 +99,8 @@ def generateSamples(n=16):
         s = np.array([[d['wind'], d['snow'], d['snow_depth'], d['max_temp'], d['min_temp'],
                        d['day'], d['date'], d['month'], d['year'], d['lunar']]])
         samples = np.append(samples, s, axis=0)
-    print(np.transpose(samples).shape)
-    # print(samples)
+    print(samples.shape)
+    print(samples)
     return samples
 
 # Returns text labels for test sample predictions
@@ -108,17 +108,16 @@ def predict(models, samples):
     prediction_list = []
     for m in models:
         region = {'label': m['label'],
-                  'predictions': [],
+                  'predictions': np.array([]),
                   'days': []
                  }
         for s in samples:
             region['days'].append(getWeekday(s[5]))                                                # <-- check index for day of week
-            print(region)
-            print(s)
-            print(s.shape)
             with graph.as_default():
-                x = labels.inverse_transform(m['model'].predict_classes(s))
-            region['predictions'].append(x)
+                region['predictions'] = np.append(region['predictions'],
+                    labels.inverse_transform(m['model'].predict_classes(np.reshape(s, (-1, 10)))))
+                # region['predictions'].append(labels.inverse_transform(m['model'].predict_classes(np.reshape(s, (-1, 10)))).astype(str))
+            region['predictions'] = region['predictions'].tolist()
         prediction_list.append(region)
     print(prediction_list)
     return prediction_list
