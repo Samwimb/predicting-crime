@@ -435,6 +435,11 @@ def getTable(table):
 
     return jsonify(tableData)
 
+@app.route("/getIMG/<i>")
+def getImage(i):
+    """Return file path for selected image"""
+    return jsonify(os.path.normpath(os.path.join(PATH, 'static', 'images', f'flag_{i}.png')))
+
 
 #################################################
 # Launch Scheduler & App

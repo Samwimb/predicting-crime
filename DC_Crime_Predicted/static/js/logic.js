@@ -7,11 +7,6 @@ var summaryBody = d3.select('#summary-body');
 var selector = d3.select('#selTable');
 var table = d3.select('#table');
 
-var path1 = document.location.pathname;
-console.log(path1);
-var path2 = window.location.pathname;
-console.log(path2);
-
 // Initialize leaflet map
 var myMap = L.map("map", {
     center: [38.9072, -77.0369],
@@ -115,7 +110,9 @@ d3.json('/get_weather', data => {
 
             // Add large flag for today's prediction
             summaryTitle.append("img")
-                .attr('src', `static/images/flag_${r.predictions[0]}.png`)
+                .attr('src', d3.json(`/getIMG/${r.predictions[0]}`, d => { 
+                    console.log(d);
+                    d; }))
                 .attr('class', 'mainflag')
 
             // Add day of the week and small flag for the rest of the days in the prediction (default=5)
@@ -125,7 +122,9 @@ d3.json('/get_weather', data => {
                 summaryBody.append("td").text(`${weekDay[r.days[i]]}:`)
                     .attr('style', 'text-align:right; width:40%;')
                 summaryBody.append("td").append("img")
-                    .attr('src', `static/images/flag_${d}.png`)
+                    .attr('src', d3.json(`/getIMG/${d}`, d => {
+                        console.log(d);
+                        d; }))
                     .attr('class', 'smallflag')
             })
         }
@@ -151,7 +150,6 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 // Use the list of table names to populate the select options
 d3.json("/get_tables", tables => {
     tables.forEach( t => {
-        console.log(t)
         selector.append("option")
         .text(t)
         .property("value", t);
@@ -162,14 +160,12 @@ d3.json("/get_tables", tables => {
 function tableChanged(newTable) {
     table.html("");
     d3.json(`/${newTable}`, data => {
-        console.log(data)
         rows = table.selectAll('tr')
             .data(data)
             .enter()
             .append('tr');
         cells = rows.selectAll('tr')
             .data( function(d) { 
-                console.log(d); 
                 return d;
             })
             .enter()
