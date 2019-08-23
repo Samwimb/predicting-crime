@@ -167,10 +167,8 @@ districts = [
 global graph
 graph = tf.get_default_graph()
 
-# absolute path to this file
-FILE_DIR = os.path.dirname(os.path.abspath(__file__))
-# absolute path to this file's root directory
-PATH = os.path.join(FILE_DIR, os.pardir)
+# absolute path to this file's directory
+PATH = os.path.dirname(__file__)
 
 # Load models for each region
 with CustomObjectScope({'GlorotUniform': glorot_uniform()}):
