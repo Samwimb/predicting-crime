@@ -7,8 +7,10 @@ var summaryBody = d3.select('#summary-body');
 var selector = d3.select('#selTable');
 var table = d3.select('#table');
 
-var path = document.location.pathname;
-console.log(path);
+var path1 = document.location.pathname;
+console.log(path1);
+var path2 = window.location.pathname;
+console.log(path2);
 
 // Initialize leaflet map
 var myMap = L.map("map", {
