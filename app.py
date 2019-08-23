@@ -33,6 +33,7 @@ from sklearn.preprocessing import LabelEncoder
 # Configure Variables & Helper Functions
 #################################################
 
+# Initialize Flask app and Scheduler for API calls
 class Config(object):
     SCHEDULER_API_ENABLED = True
 
@@ -46,65 +47,68 @@ scheduler.init_app(app)
 M_KEY = os.environ.get('m_key', "")
 W_KEY = os.environ.get('w_key', "aa2739ba803749f08d1691ee4f04d27a")       # <--- ADD KEYS TO HEROKU CONFIG
 
-# Intialize empty list for weather forecast
+# Intialize empty lists for weather forecast and crime prediction
 forecast = []
+prediction_list = []
 
-bins = [ {
-    'verylow': 62,
-    'low': 83,
-    'medium': 104,
-    'high': 125,
-    'veryhigh': 163
-},
-{
-    'verylow': 5,
-    'low': 10,
-    'medium': 15,
-    'high': 20,
-    'veryhigh': 36
-},
-{
-    'verylow': 7,
-    'low': 13,
-    'medium': 19,
-    'high': 25,
-    'veryhigh': 45
-},
-{
-    'verylow': 7,
-    'low': 13,
-    'medium': 19,
-    'high': 25,
-    'veryhigh': 42
-},
-{
-    'verylow': 4,
-    'low': 9,
-    'medium': 14,
-    'high': 19,
-    'veryhigh': 33
-},
-{
-    'verylow': 4,
-    'low': 9,
-    'medium': 14,
-    'high': 19,
-    'veryhigh': 31
-},
-{
-    'verylow': 4,
-    'low': 9,
-    'medium': 14,
-    'high': 19,
-    'veryhigh': 29
-},
-{
-    'verylow': 3,
-    'low': 7,
-    'medium': 11,
-    'high': 15,
-    'veryhigh': 25
-}]
+bins = [
+    { # All of DC
+        'verylow': 62,
+        'low': 83,
+        'medium': 104,
+        'high': 125,
+        'veryhigh': 163
+    },
+    { # District 1
+        'verylow': 5,
+        'low': 10,
+        'medium': 15,
+        'high': 20,
+        'veryhigh': 36
+    },
+    { # District 2
+        'verylow': 7,
+        'low': 13,
+        'medium': 19,
+        'high': 25,
+        'veryhigh': 45
+    },
+    { # District 3
+        'verylow': 7,
+        'low': 13,
+        'medium': 19,
+        'high': 25,
+        'veryhigh': 42
+    },
+    { # District 4
+        'verylow': 4,
+        'low': 9,
+        'medium': 14,
+        'high': 19,
+        'veryhigh': 33
+    },
+    { # District 5
+        'verylow': 4,
+        'low': 9,
+        'medium': 14,
+        'high': 19,
+        'veryhigh': 31
+    },
+    { # District 6
+        'verylow': 4,
+        'low': 9,
+        'medium': 14,
+        'high': 19,
+        'veryhigh': 29
+    },
+    { # District 7
+        'verylow': 3,
+        'low': 7,
+        'medium': 11,
+        'high': 15,
+        'veryhigh': 25
+    }
+]
 
 def insertRow(x):
     date = forecast[1]['text']
@@ -187,7 +191,7 @@ def generateSamples(n=16):
 
 # Returns text labels for test sample predictions
 def predict(models, samples):
-    prediction_list = []
+    prediction_list.clear()
     for m in models:
         region = {'label': m['label'],
                   'predictions': np.array([]),
@@ -200,7 +204,6 @@ def predict(models, samples):
                     labels.inverse_transform(m['model'].predict_classes(np.reshape(s, (-1, 10)))))
             region['predictions'] = region['predictions'].tolist()
         prediction_list.append(region)
-    return prediction_list
 
 
 #################################################
@@ -269,18 +272,24 @@ class District7(Base):
     Actual = Column(String(30))
     Correct = Column(String(30))
 
-districts=[allDistricts, District1, District2, District3,
- District4, District5, District6, District7]
-
-# Save references to each table
-# Samples_Metadata = Base.classes.sample_metadata
-# Samples = Base.classes.samples
+# Store all tables in list for easy iterating
+districts = [
+    allDistricts,
+    District1,
+    District2,
+    District3,
+    District4,
+    District5,
+    District6,
+    District7
+]
 
 
 #################################################
-# Load ML Model & Initialize Test Data
+# Load Models & Initialize Samples
 #################################################
 
+# Initialize graph to avoid threading issues
 global graph
 graph = tf.get_default_graph()
 
@@ -345,6 +354,19 @@ Samples = generateSamples(6)
 # Configure Routes
 #################################################
 
+# Make predictions for n-Samples
+predict(Models, Samples)
+
+# Store today's prediction in database
+insertRow(prediction_list)
+
+# Update database with yesterday's actual crime count
+updateRow()
+
+#################################################
+# Configure Routes
+#################################################
+
 @app.route("/")
 def index():
     """Return the homepage"""
@@ -359,10 +381,7 @@ def getForecast():
 @app.route("/crime_forecast")
 def crimeForecast():
     """Return array with today's crime prediction and 5-day forecast"""
-    # return jsonify(list(labels.inverse_transform([0, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
-    x = predict(Models, Samples)
-    insertRow(x)
-    return jsonify(x)
+    return jsonify(prediction_list)
 
 
 #################################################
