@@ -14,7 +14,7 @@ import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, Float, func
+from sqlalchemy import Column, Integer, String, Float, func, update, insert
 
 from flask import Flask, jsonify, render_template
 from flask_apscheduler import APScheduler
@@ -106,12 +106,23 @@ bins = [ {
     'veryhigh': 25
 }]
 
-# def insertRow(x):
-#     date = forecast[1]['text']
-#     for i, d in enumerate(districts):
-        # check to to see ifn row for date exists
-        # if it does, overwrite it (update)
-        # if it doesnt', insert data
+def insertRow(x):
+    date = forecast[1]['text']
+    for i, d in enumerate(districts):
+        sel=[
+            d.Date,
+            d.Prediction,
+            d.Actual,
+            d.Correct
+        ]
+        result=db.session.query(*sel).filter(d.Date.like(f"{date}%")).all()
+        if result:
+           stmt = update(d).where(d.Date==date).values(Prediction=x[i]['predictions'][0])
+           session.execute(stmt)
+        else:
+            # stmt2 = Base.metadata.tables[d].insert(d).values({'Date': date, 'Predicitions': x[i]['predictions'][0]})
+            stmt2 = insert(d).values({'Date': date, 'Predicitions': x[i]['predictions'][0]})
+            session.execute(stmt2)
 
 # def updateRow():
     # call api
@@ -350,7 +361,7 @@ def crimeForecast():
     """Return array with today's crime prediction and 5-day forecast"""
     # return jsonify(list(labels.inverse_transform([0, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
     x = predict(Models, Samples)
-    # insertRow(x)
+    insertRow(x)
     return jsonify(x)
 
 
