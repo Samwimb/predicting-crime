@@ -167,39 +167,44 @@ districts = [
 global graph
 graph = tf.get_default_graph()
 
+# absolute path to this file
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+# absolute path to this file's root directory
+PATH = os.path.join(FILE_DIR, os.pardir)
+
 # Load models for each region
 with CustomObjectScope({'GlorotUniform': glorot_uniform()}):
-    with open('./static/models/model_architecture_alldistricts.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_alldistricts.json'), 'r') as f:
         DCmodel = model_from_json(f.read())
-    DCmodel.load_weights('./static/models/alldistricts_weights.h5')
+    DCmodel.load_weights(os.path.join(PATH, '/static/models/alldistricts_weights.h5'))
 
-    with open('./static/models/model_architecture_district1.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district1.json'), 'r') as f:
         D1model = model_from_json(f.read())
-    D1model.load_weights('./static/models/district1_weights.h5')
+    D1model.load_weights(os.path.join(PATH, '/static/models/district1_weights.h5'))
 
-    with open('./static/models/model_architecture_district2.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district2.json'), 'r') as f:
         D2model = model_from_json(f.read())
-    D2model.load_weights('./static/models/district2_weights.h5')
+    D2model.load_weights(os.path.join(PATH, '/static/models/district2_weights.h5'))
 
-    with open('./static/models/model_architecture_district3.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district3.json'), 'r') as f:
         D3model = model_from_json(f.read())
-    D3model.load_weights('./static/models/district3_weights.h5')
+    D3model.load_weights(os.path.join(PATH, '/static/models/district3_weights.h5'))
 
-    with open('./static/models/model_architecture_district4.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district4.json'), 'r') as f:
         D4model = model_from_json(f.read())
-    D4model.load_weights('./static/models/district4_weights.h5')
+    D4model.load_weights(os.path.join(PATH, '/static/models/district4_weights.h5'))
 
-    with open('./static/models/model_architecture_district5.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district5.json'), 'r') as f:
         D5model = model_from_json(f.read())
-    D5model.load_weights('./static/models/district5_weights.h5')
+    D5model.load_weights(os.path.join(PATH, '/static/models/district5_weights.h5'))
 
-    with open('./static/models/model_architecture_district6.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district6.json'), 'r') as f:
         D6model = model_from_json(f.read())
-    D6model.load_weights('./static/models/district6_weights.h5')
+    D6model.load_weights(os.path.join(PATH, '/static/models/district6_weights.h5'))
 
-    with open('./static/models/model_architecture_district7.json', 'r') as f:
+    with open(os.path.join(PATH, '/static/models/model_architecture_district7.json'), 'r') as f:
         D7model = model_from_json(f.read())
-    D7model.load_weights('./static/models/district7_weights.h5')
+    D7model.load_weights(os.path.join(PATH, '/static/models/district7_weights.h5'))
 
 # Store models with label
 Models = [
