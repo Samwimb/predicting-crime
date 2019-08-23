@@ -337,8 +337,8 @@ Samples = generateSamples(6)
 @app.route("/")
 def index():
     """Return the homepage"""
-    return render_template("justins_playground.html")
-    # return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
+    # return render_template("justins_playground.html")
+    return render_template("index.html")        # <--- ENSURE THIS POINTS TO THE CORRECT HOMEPAGE
 
 @app.route("/get_weather")
 def getForecast():
@@ -350,7 +350,7 @@ def crimeForecast():
     """Return array with today's crime prediction and 5-day forecast"""
     # return jsonify(list(labels.inverse_transform([0, 2, 2, 1, 4, 0])))      # <--- FOR TESTING ONLY
     x = predict(Models, Samples)
-    insertRow(x)
+    # insertRow(x)
     return jsonify(x)
 
 
