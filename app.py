@@ -11,9 +11,10 @@ from datetime import date
 import requests
 
 import sqlalchemy
-from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
+from sqlalchemy import Column, Integer, String, Float, func
 
 from flask import Flask, jsonify, render_template
 from flask_apscheduler import APScheduler
@@ -48,71 +49,71 @@ W_KEY = os.environ.get('w_key', "aa2739ba803749f08d1691ee4f04d27a")       # <---
 # Intialize empty list for weather forecast
 forecast = []
 
-bins [ {
-    verylow: 62,
-    low: 83,
-    medium: 104,
-    high: 125,
-    veryhigh: 163
+bins = [ {
+    'verylow': 62,
+    'low': 83,
+    'medium': 104,
+    'high': 125,
+    'veryhigh': 163
 },
 {
-    verylow: 5,
-    low: 10,
-    medium: 15,
-    high: 20,
-    veryhigh: 36
+    'verylow': 5,
+    'low': 10,
+    'medium': 15,
+    'high': 20,
+    'veryhigh': 36
 },
 {
-    verylow: 7,
-    low: 13,
-    medium: 19,
-    high: 25,
-    veryhigh: 45
+    'verylow': 7,
+    'low': 13,
+    'medium': 19,
+    'high': 25,
+    'veryhigh': 45
 },
 {
-    verylow: 7,
-    low: 13,
-    medium: 19,
-    high: 25,
-    veryhigh: 42
+    'verylow': 7,
+    'low': 13,
+    'medium': 19,
+    'high': 25,
+    'veryhigh': 42
 },
 {
-    verylow: 4,
-    low: 9,
-    medium: 14,
-    high: 19,
-    veryhigh: 33
+    'verylow': 4,
+    'low': 9,
+    'medium': 14,
+    'high': 19,
+    'veryhigh': 33
 },
 {
-    verylow: 4,
-    low: 9,
-    medium: 14,
-    high: 19,
-    veryhigh: 31
+    'verylow': 4,
+    'low': 9,
+    'medium': 14,
+    'high': 19,
+    'veryhigh': 31
 },
 {
-    verylow: 4,
-    low: 9,
-    medium: 14,
-    high: 19,
-    veryhigh: 29
+    'verylow': 4,
+    'low': 9,
+    'medium': 14,
+    'high': 19,
+    'veryhigh': 29
 },
 {
-    verylow: 3,
-    low: 7,
-    medium: 11,
-    high: 15,
-    veryhigh: 25
+    'verylow': 3,
+    'low': 7,
+    'medium': 11,
+    'high': 15,
+    'veryhigh': 25
 }]
 
-def insertRow(x):
-    date = forecast[1]['text']
-    for i, d in enumerate(districts):
+# def insertRow(x):
+#     date = forecast[1]['text']
+#     for i, d in enumerate(districts):
         # check to to see ifn row for date exists
         # if it does, overwrite it (update)
         # if it doesnt', insert data
 
-def updateRow():
+# def updateRow():
     # call api
     # count records for last day that doesn't have entry for actual_count
     # compare to prediction and assign value
@@ -203,56 +204,56 @@ Base = declarative_base()
 
 class allDistricts(Base):
     __tablename__ = 'alldistricts'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
     
 class District1(Base):
     __tablename__ = 'district1'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
 
 class District2(Base):
     __tablename__ = 'district2'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
 
 class District3(Base):
     __tablename__ = 'district3'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
 
 class District4(Base):
     __tablename__ = 'district4'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
 
 class District5(Base):
     __tablename__ = 'district5'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
 
 class District6(Base):
     __tablename__ = 'district6'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
 
 class District7(Base):
     __tablename__ = 'district7'
-    Date = Column(String(30))
+    Date = Column(String(30), primary_key=True)
     Prediction = Column(String(30))
     Actual = Column(String(30))
     Correct = Column(String(30))
