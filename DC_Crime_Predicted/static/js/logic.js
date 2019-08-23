@@ -7,6 +7,9 @@ var summaryBody = d3.select('#summary-body');
 var selector = d3.select('#selTable');
 var table = d3.select('#table');
 
+var path = document.location.pathname;
+console.log(path);
+
 // Initialize leaflet map
 var myMap = L.map("map", {
     center: [38.9072, -77.0369],
