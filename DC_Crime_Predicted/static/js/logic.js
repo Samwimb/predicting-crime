@@ -110,7 +110,7 @@ d3.json('/get_weather', data => {
 
             // Add large flag for today's prediction
             summaryTitle.append("img")
-                .attr('src', `../static/images/flag_${r.predictions[0]}.png`)
+                .attr('src', `/../static/images/flag_${r.predictions[0]}.png`)
                 .attr('class', 'mainflag')
 
             // Add day of the week and small flag for the rest of the days in the prediction (default=5)
@@ -120,7 +120,7 @@ d3.json('/get_weather', data => {
                 summaryBody.append("td").text(`${weekDay[r.days[i]]}:`)
                     .attr('style', 'text-align:right; width:40%;')
                 summaryBody.append("td").append("img")
-                    .attr('src', `../static/images/flag_${d}.png`)
+                    .attr('src', `/../static/images/flag_${d}.png`)
                     .attr('class', 'smallflag')
             })
         }
