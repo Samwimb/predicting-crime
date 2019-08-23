@@ -118,11 +118,11 @@ def insertRow(x):
         result=db.session.query(*sel).filter(d.Date.like(f"{date}%")).all()
         if result:
            stmt = update(d).where(d.Date==date).values(Prediction=x[i]['predictions'][0])
-           session.execute(stmt)
+           db.session.execute(stmt)
         else:
             # stmt2 = Base.metadata.tables[d].insert(d).values({'Date': date, 'Predicitions': x[i]['predictions'][0]})
-            stmt2 = insert(d).values({'Date': date, 'Predicitions': x[i]['predictions'][0]})
-            session.execute(stmt2)
+            stmt2 = insert(d).values({'Date': date, 'Prediction': x[i]['predictions'][0]})
+            db.session.execute(stmt2)
 
 # def updateRow():
     # call api
