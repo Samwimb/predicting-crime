@@ -4,6 +4,8 @@ var weekDay = ['', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frid
 // Save selections for later use
 var summaryTitle = d3.select('#summary-title');
 var summaryBody = d3.select('#summary-body');
+var selector = d3.select('#selTable');
+var table = d3.select('#table');
 
 // Initialize leaflet map
 var myMap = L.map("map", {
@@ -141,39 +143,36 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(myMap);
 
 
+// Use the list of table names to populate the select options
+d3.json("/get_tables", tables => {
+    tables.forEach( t => {
+        console.log(t)
+        selector.append("option")
+        .text(t)
+        .property("value", t);
+    });
+});
 
+// Update table with data from selected table
+function tableChanged(newTable) {
+    table.html("");
+    d3.json(`/${newTable}`, data => {
+        console.log(data)
+        rows = table.selectAll('tr')
+            .data(data)
+            .enter()
+            .append('tr');
+        cells = rows.selectAll('tr')
+            .data( function(d) { 
+                console.log(d); 
+                return d;
+            })
+            .enter()
+            .append('td')
+            .text( function(d) { 
+                return d; 
+            });
+    });
+}
 
-
-
-
-
-
-// d3.json('/crime_forecast', function(predictions) {
-//     d3.json('/get_weather', function(weather) {
-        
-
-//         p = predictions[0];
-//         summaryTitle.append("img")
-//             .attr('src', `static/images/flag_${p.predictions[0]}.png`)
-//             .attr('class', 'mainflag')
-
-//         L.geoJSON(boundaries, {
-//             onEachFeature: onEachFeature,
-//             style: {
-//                 color: getColor(predictions.filter(d => { d.label == feature.properties.DISTRICT}).predictions[0]),
-//                 fill: false,
-//                 weight: 6
-//             }
-//         }).addTo(myMap);
-        
-//         p.predictions.forEach((d, i) => {
-//             if (i == 0) {return;}
-//             summaryBody.append("tr")
-//             summaryBody.append("td").text(`${weekDay[p.days[i]]}:`)
-//                 .attr('style', 'text-align:right; width:40%;')
-//             summaryBody.append("td").append("img")
-//                 .attr('src', `static/images/flag_${d}.png`)
-//                 .attr('class', 'smallflag')
-//         })        
-//     })
-// });
+tableChanged('allDistricts');

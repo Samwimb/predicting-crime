@@ -111,8 +111,27 @@
       <div class="row">
         <div class="col-lg-8 mx-auto">
           <h2>About the data</h2>
-          <p class="lead">These tables contains data since end August 2019 for each of the seven district in DC and one for DC as a whole. 
-            We wanted to see if our prediction falls inside the correct bin.</p>
+          <p class="lead">These tables contain historic data for predictions made for DC and each of the seven districts. 
+            This allows monitoring of prediction accuracy over time.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mx-auto">
+          <h5>Select Table:</h5>
+          <select id="selTable" onchange="tableChanged(this.value)"></select>
+        </div>
+        <div class="col-md-9 mx-auto">
+          <table class="table table-striped">
+            <thead>
+              <tr class="header">
+                  <th style="width:25%;">Date</th>
+                  <th style="width:25%;">Prediction</th>
+                  <th style="width:25%;">Actual Count</th>
+                  <th style="width:25%;">Correct Prediction</th>
+              </tr>
+            </thead>
+            <tbody id="table"></tbody>
+          </table>
         </div>
       </div>
     </div>
