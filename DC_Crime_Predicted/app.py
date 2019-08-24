@@ -248,7 +248,7 @@ def getWeather():
                     'max_temp': d['max_temp'],
                     'min_temp': d['min_temp'],
                     'precip': d['precip'],
-                    'lunar': round(d['moon_phase'], 4),
+                    'lunar': d['moon_phase'],
                     'wind': d['wind_spd'],
                     'snow': d['snow'],
                     'snow_depth': d['snow_depth']
