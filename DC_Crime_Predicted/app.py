@@ -232,6 +232,7 @@ labels.fit(bin_labels)
 def getWeather():
     weatherURL = f"https://api.weatherbit.io/v2.0/forecast/daily?city=Washington,DC&units=I&key={W_KEY}"
     data = requests.get(weatherURL).json()
+    print(data)
 
     day = getToday()
 
