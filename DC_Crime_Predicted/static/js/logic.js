@@ -128,7 +128,6 @@ d3.json('/get_weather', data => {
         // Initialize map and fit zoom to DC proper
         geojson = L.geoJSON(boundaries, {style: style, onEachFeature: onEachFeature}).addTo(myMap);
         myMap.fitBounds(geojson.getBounds());
-        geojson.getLayers()[0].bringToFront();
 
         // Initialize prediction panel with DC overall data
         buildPanel(boundaries.features[0]);
