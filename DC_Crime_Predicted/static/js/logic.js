@@ -106,6 +106,7 @@ d3.json('/get_weather', data => {
 
             // Store prediction data for selected feature
             var r;
+            console.log(predicts);
             predicts.forEach(d => { if (d.label == feature.properties.DISTRICT) { r = d }});
 
             // Add large flag for today's prediction
